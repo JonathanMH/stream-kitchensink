@@ -7,6 +7,11 @@ h1 {
 	text-align: center;
 }
 
+.spacer {
+	min-height: 900px;
+	background-image: url('http://placekitten.com/g/781/500');
+}
+
 .countup {
 	margin: 50px;
 }

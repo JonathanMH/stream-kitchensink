@@ -19,6 +19,7 @@ export default class CountUp extends Component {
 	}
 
 	componentDidMount() {
+		console.log('DID MOUNT')
 		this.state.interval = setInterval(this.iterateValue, this.state.frameRate)
 	}
 
