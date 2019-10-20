@@ -8,18 +8,22 @@ export default class CountUp extends Component {
 		this.state = {
 			currentValue: 0,
 			frameRate: 33,
-			duration: 1981,
+			duration: 1000,
+		}
+
+		if (this.props.duration) {
+			this.state.duration = this.props.duration;
 		}
 
 		this.iterateValue = this.iterateValue.bind(this);
 	}
 
 	componentDidMount() {
-		setInterval(this.iterateValue, this.state.frameRate)
+		this.state.interval = setInterval(this.iterateValue, this.state.frameRate)
 	}
 
 	iterateValue() {
-		const { currentValue, duration, frameRate } = this.state;
+		const { currentValue, duration, frameRate, interval } = this.state;
 		const { finalValue } = this.props;
 
 		let split = Math.abs(finalValue / (duration / frameRate));
@@ -29,6 +33,7 @@ export default class CountUp extends Component {
 			this.setState({ currentValue: newValue });
 		} else {
 			this.setState({ currentValue: finalValue });
+			clearInterval(interval);
 		}
 	}
 
