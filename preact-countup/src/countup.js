@@ -15,17 +15,23 @@ export default class CountUp extends Component {
 			this.state.duration = this.props.duration;
 		}
 
+		if (this.props.finalValue) {
+			this.state.finalValue = this.props.finalValue;
+		}
+
+		if (this.props.customFn) {
+			this.state.finalValue = this.props.customFn();
+		}
+
 		this.iterateValue = this.iterateValue.bind(this);
 	}
 
 	componentDidMount() {
-		console.log('DID MOUNT')
 		this.state.interval = setInterval(this.iterateValue, this.state.frameRate)
 	}
 
 	iterateValue() {
-		const { currentValue, duration, frameRate, interval } = this.state;
-		const { finalValue } = this.props;
+		const { currentValue, duration, frameRate, interval, finalValue } = this.state;
 
 		let split = Math.abs(finalValue / (duration / frameRate));
 

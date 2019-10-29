@@ -1,22 +1,23 @@
-html, body {
-	font: 14px/1.21 'Helvetica Neue', arial, sans-serif;
-	font-weight: 400;
+html,
+body {
+  font: 14px/1.21 "Helvetica Neue", arial, sans-serif;
+  font-weight: 400;
 }
 
 h1 {
-	text-align: center;
+  text-align: center;
 }
 
 .spacer {
-	min-height: 900px;
-	background-image: url('http://placekitten.com/g/781/500');
+  min-height: 100px;
+  background-image: url("http://placekitten.com/g/781/500");
 }
 
 .countup {
-	margin: 50px;
+  margin: 50px;
 }
 
 .countup .value {
-	font-size: 5rem;
-	font-weight: bold;
+  font-size: 5rem;
+  font-weight: bold;
 }
