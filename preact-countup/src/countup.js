@@ -2,14 +2,29 @@ import './style';
 import { Component } from 'preact';
 
 export default class CountUp extends Component {
+	iterateValue() {
+		const { currentValue, duration, frameRate, interval, finalValue } = this.state;
+
+		let split = Math.abs(finalValue / (duration / frameRate));
+
+		if (currentValue < parseInt(finalValue, 10)) {
+			const newValue = currentValue + split;
+			this.setState({ currentValue: newValue });
+		}
+		else {
+			this.setState({ currentValue: finalValue });
+			clearInterval(interval);
+		}
+	}
+
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			currentValue: 0,
 			frameRate: 33,
-			duration: 1000,
-		}
+			duration: 1000
+		};
 
 		if (this.props.duration) {
 			this.state.duration = this.props.duration;
@@ -31,20 +46,6 @@ export default class CountUp extends Component {
 		this.state.interval = setInterval(this.iterateValue, this.state.frameRate)
 	}
 
-	iterateValue() {
-		const { currentValue, duration, frameRate, interval, finalValue } = this.state;
-
-		let split = Math.abs(finalValue / (duration / frameRate));
-
-		if (currentValue < parseInt(finalValue, 10)) {
-			const newValue = currentValue + split;
-			this.setState({ currentValue: newValue });
-		} else {
-			this.setState({ currentValue: finalValue });
-			clearInterval(interval);
-		}
-	}
-
 	render() {
 		return (
 			<div class="countup" >
@@ -52,7 +53,7 @@ export default class CountUp extends Component {
 					{Math.round(this.state.currentValue, 0)}
 				</div>
 			</div>
-		)
+		);
 	}
 
 }
