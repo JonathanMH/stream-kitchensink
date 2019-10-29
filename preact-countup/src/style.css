@@ -9,12 +9,19 @@ h1 {
 }
 
 .spacer {
-  min-height: 100px;
+  min-height: 1200px;
   background-image: url("http://placekitten.com/g/781/500");
+}
+
+.tiny-spacer {
+  min-height: 150px;
+  width: 100%;
+  background-color: magenta;
 }
 
 .countup {
   margin: 50px;
+  margin-bottom: 100px;
 }
 
 .countup .value {

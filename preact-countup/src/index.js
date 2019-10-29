@@ -2,6 +2,7 @@ import './style';
 import { Component, createRef } from 'preact';
 
 import CountUp from './countup.js';
+import IsVisible from './isVisible';
 
 export default class App extends Component {
 	state = {
@@ -10,28 +11,6 @@ export default class App extends Component {
 
 	constructor() {
 		super();
-		// the element that contains all intersect observed elements
-		this.rootRef = createRef();
-		// elements inside the wrap to be hidden until in viewport
-		this.wrapRef = createRef();
-
-		this.showCountUps = this.showCountUps.bind(this);
-
-		this.observer = new IntersectionObserver(this.showCountUps, {
-			root: this.rootRef.current,
-			threshhold: 1
-		});
-	}
-
-	showCountUps(entries) {
-		console.log('intersecting!')
-		if (entries[0].intersectionRatio !== 0) {
-			this.setState({ renderCountUps: true });
-		}
-	}
-
-	componentDidMount() {
-		this.observer.observe(this.wrapRef.current);
 	}
 
 	customFn() {
@@ -46,30 +25,32 @@ export default class App extends Component {
 	}
 
 	render() {
-		/*
-		let { renderCountUps } = this.state;
-		let renderCountUps = true;
-
-		let onScrollComponent = null;
-
-		if (renderCountUps) {
-			onScrollComponent = (<CountUp
-				finalValue="76"
-				duration="1000"
-			/>)
-		}
-		*/
-
 		return (
 			<div>
-				<div ref={this.rootRef}>
+				<div>
 					<div class="spacer"></div>
-					<div ref={this.wrapRef}>
-						<CountUp
-							finalValue="76"
-							duration="1000"
-							customFn={this.customFn}
-						/>
+					<div>
+						<IsVisible>
+							<CountUp
+								finalValue="76"
+								duration="1000"
+								customFn={this.customFn}
+							/>
+						</IsVisible>
+						<div class="tiny-spacer"></div>
+						<IsVisible >
+							<CountUp
+								finalValue="1500"
+								duration="1000"
+							/>
+						</IsVisible>
+						<div class="tiny-spacer"></div>
+						<IsVisible>
+							<CountUp
+								finalValue="9000"
+								duration="1000"
+							/>
+						</IsVisible>
 					</div>
 					<div class="spacer"></div>
 				</div>
