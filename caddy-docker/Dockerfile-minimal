@@ -1,0 +1,7 @@
+FROM alpine
+EXPOSE 5000
+RUN apk add --no-cache caddy
+RUN mkdir -p /var/www/html
+COPY pages/ /var/www/html/
+WORKDIR /var/www/html
+CMD ["caddy", "file-server", "--listen", ":5000"]
