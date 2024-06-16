@@ -1,0 +1,17 @@
+
+{
+  auto_https off
+}
+
+:5000 {
+  # import redirects
+  import /var/app/caddy-config/redirects
+
+  # set the root for our served files
+  root * /var/www/html
+
+  # Enable the static file server.
+  file_server {
+    precompressed zstd br gzip
+  }
+}

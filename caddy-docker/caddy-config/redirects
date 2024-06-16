@@ -1,0 +1,15 @@
+# redirect to front page
+redir /tag/* / permanent
+redir /author/* / permanent
+
+# old post structure from /[name] to /blog/[name]
+
+# exact match
+redir /ice-cream /blog/ice-cream permanent
+
+# match path and path with trailing slash
+redir /peaches /blog/peaches permanent
+redir /peaches/ /blog/peaches permanent
+
+# match prefix, every route starting with /eggplant will be redirected
+redir /eggplant* /blog/eggplant permanent
