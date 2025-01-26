@@ -82,7 +82,7 @@ async function addLocations(lrs: LocationRecord[]): Promise<LocationRecord[]> {
 	return lrwc
 }
 
-async function getAccDistance(rlr: LocationRecord): Promise<any> {
+async function getAccDistance(rlr: LocationRecord): Promise<number> {
 	let distanceKm = 0;
 	const result = await sql.unsafe(`SELECT city,country,point,
 	ROUND(
