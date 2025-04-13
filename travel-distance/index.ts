@@ -60,24 +60,38 @@ async function storeRecords(lrs: LocationRecord[]) {
 	}
 }
 
-async function addCoordinates(lr: LocationRecord): Promise<LocationRecord> {
+async function addCoordinates(lr: LocationRecord): Promise<LocationRecord | null> {
+	console.log('requesting', lr.city, lr.country)
 	const BASE_URL = "http://api.openweathermap.org"
-	const ENDPOINT = `/geo/1.0/direct?q=${lr.city},${lr.country}&appid=${OPEN_WEATHER_API_KEY} `
+	const ENDPOINT = `/geo/1.0/direct?q=${encodeURIComponent(lr.city)},${encodeURIComponent(lr.country)}&appid=${OPEN_WEATHER_API_KEY} `
 	let elr;
-	await fetch(`${BASE_URL}${ENDPOINT} `)
-		.then(response => {
-			return response.json()
-		})
-		.then(data => {
-			elr = { ...lr, longitude: data[0].lon, latitude: data[0].lat, point: createPostGisPoint(data[0].lon, data[0].lat) }
-		})
-	return elr
+	try {
+		await fetch(`${BASE_URL}${ENDPOINT} `)
+			.then(response => {
+				return response.json()
+			})
+			.then(data => {
+				if (data.length === 0) {
+					console.log('no records for', lr.city)
+				}
+				elr = { ...lr, longitude: data[0].lon, latitude: data[0].lat, point: createPostGisPoint(data[0].lon, data[0].lat) }
+				console.log(elr.point);
+			}).catch(e => {
+				console.log('request error', e)
+			})
+		return elr
+	} catch (e) {
+		return null;
+	}
 }
 
 async function addLocations(lrs: LocationRecord[]): Promise<LocationRecord[]> {
 	const lrwc: LocationRecord[] = [];
 	for (let lr of lrs) {
-		lrwc.push(await addCoordinates(lr));
+		const withCoordinates = await addCoordinates(lr);
+		if (withCoordinates) {
+			lrwc.push(withCoordinates);
+		}
 	}
 	return lrwc
 }
